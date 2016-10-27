@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <style type="text/css">
+  body{
+    margin: 0;
+  }
+  </style>
+</head>
   <body>
     <div id="player"></div>
 
@@ -13,8 +20,8 @@
       var player;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-          height: '390',
-          width: '640',
+          height: window.screen.availHeight,
+          width: window.screen.availWidth,
           videoId: 'F8C5orQdxb8',
           playerVars: { 'autoplay': 1, 'controls': 0 },
           events: {
