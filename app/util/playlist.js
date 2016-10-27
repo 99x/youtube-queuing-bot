@@ -60,8 +60,8 @@ Playlist.prototype.all = function all() {
     return playlistQueue;
 }
 
-// Playlist.prototype.que = function all() {
-//     return QUEUE;
-// }
+Playlist.prototype.que = function all() {
+    return QUEUE;
+}
 
 module.exports = Playlist;
