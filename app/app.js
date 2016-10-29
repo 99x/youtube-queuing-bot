@@ -82,7 +82,7 @@ bot.beginDialogAction('help', '/help', { matches: /^help/i });
 
 bot.dialog('/', [
     function (session) {
-        session.send("Hi... I'm the Microsoft Bot Framework demo bot for Skype. I can show you everything you can use our Bot Builder SDK to do on Skype.");
+        session.send("Hi..I'm the 99XT TV content bot");
         session.beginDialog('/help');
     },
     function (session, results) {
@@ -94,3 +94,28 @@ bot.dialog('/', [
         session.send("Ok... See you later!");
     }
 ]);
+
+bot.dialog('/help', [
+    function (session) {
+        session.endDialog("testing this bois");
+    }
+]);
+
+bot.dialog('/menu', [
+    function (session) {
+        builder.Prompts.choice(session, "Simply Send me youtube link and ill add to our playlist");
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
