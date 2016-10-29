@@ -1,4 +1,4 @@
-
+'use strict';
 const Playlist = function() {};
 const settings = require('../config');
 let playlistQueue = [];
