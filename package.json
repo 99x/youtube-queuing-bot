@@ -4,7 +4,7 @@
   "description": "This Skype bot will queue any youtube urls and form a playlist.",
   "main": "app/app.js",
   "scripts": {
-    "start": "nodemon ./app/app.js",
+    "start": "node ./app/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
