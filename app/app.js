@@ -5,6 +5,7 @@ const PlaylistQueue = require('./util/playlist');
 const Playlist = new PlaylistQueue();
 let count = 0;
 app.use(express.static('client'));
+app.use(express.static('public'));
 app.get('/api/add', (req,res) => {
     res.status(200).json({
         temp : Playlist.add(count++)
