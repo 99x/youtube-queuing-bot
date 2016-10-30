@@ -73,49 +73,40 @@ bot.on('deleteUserData', function (message) {
 });
 
 
+//=========================================================
+// Bots Middleware
+//=========================================================
+
+// Anytime the major version is incremented any existing conversations will be restarted.
 bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i }));
 
+//=========================================================
+// Bots Global Actions
+//=========================================================
 
 bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
 bot.beginDialogAction('help', '/help', { matches: /^help/i });
 
+//=========================================================
+// Bots Dialogs
+//=========================================================
 
 bot.dialog('/', [
     function (session) {
-        session.send("Hi..I'm the 99XT TV content bot");
-        session.beginDialog('/help');
+        builder.Prompts.text(session, "Hello Please Send me a youtube link and i will add to our playlist");
     },
     function (session, results) {
-        // Display menu
-        session.beginDialog('/menu');
+        session.userData.name = results.response;
+        builder.Prompts.number(session, "Hi " + results.response + ", How many years have you been coding?"); 
     },
     function (session, results) {
-        // Always say goodbye
-        session.send("Ok... See you later!");
+        session.userData.coding = results.response;
+        builder.Prompts.choice(session, "What language do you code Node using?", ["JavaScript", "CoffeeScript", "TypeScript"]);
+    },
+    function (session, results) {
+        session.userData.language = results.response.entity;
+        session.send("Got it... " + session.userData.name + 
+                     " you've been programming for " + session.userData.coding + 
+                     " years and use " + session.userData.language + ".");
     }
 ]);
-
-bot.dialog('/help', [
-    function (session) {
-        session.endDialog("testing this bois");
-    }
-]);
-
-bot.dialog('/menu', [
-    function (session) {
-        builder.Prompts.choice(session, "Simply Send me youtube link and ill add to our playlist");
-    },
-    function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
-        } else {
-            // Exit the menu
-            session.endDialog();
-        }
-    },
-    function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
-    }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
