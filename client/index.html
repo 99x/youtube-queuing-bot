@@ -1,37 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <title>Youtube-queuing-bot by 99xt</title>
-  </head>
-
+<head>
+  <style type="text/css">
+  body{
+    margin: 0;
+  }
+  </style>
+</head>
   <body>
+    <div id="player"></div>
 
-    <header>
-      <div class="container">
-        <h1>Youtube-queuing-bot</h1>
-        <h2>A full screen web app to play youtube playlist videos (will be used for the RPI) </h2>
+    <script>
+      var tag = document.createElement('script');
 
-        <section id="downloads">
-          <a href="https://github.com/99xt/youtube-queuing-bot/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/99xt/youtube-queuing-bot/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/99xt/youtube-queuing-bot" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    <div class="container">
-      <section id="main_content">
-        <p>test</p>
-      </section>
-    </div>
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: window.screen.availHeight,
+          width: window.screen.availWidth,
+          videoId: 'F8C5orQdxb8',
+          playerVars: { 'autoplay': 1, 'controls': 0 },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
 
-    
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
   </body>
 </html>
