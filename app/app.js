@@ -3,10 +3,6 @@
 const express = require('express');
 const builder = require('botbuilder');
 
-//=========================================================
-// Bot Setup
-//=========================================================
-
 const server = express();
 server.listen(process.env.port || process.env.PORT || 3000, function () {
     console.log('%s listening to %s', server.name, server.url);
@@ -31,7 +27,6 @@ server.post('/api/messages', connector.listen());
 bot.on('conversationUpdate', function (message) {
     // Check for group conversations
     if (message.address.conversation.isGroup) {
-        // Send a hello message when bot is added
         if (message.membersAdded) {
             message.membersAdded.forEach(function (identity) {
                 if (identity.id === message.address.bot.id) {
@@ -62,7 +57,7 @@ bot.on('contactRelationUpdate', function (message) {
         var name = message.user ? message.user.name : null;
         var reply = new builder.Message()
             .address(message.address)
-            .text("Hello %s... Thanks for adding me. Post your youtube links here and i will and them to the playlist ");
+            .text("Hello %s... Thanks for adding me. Post your youtube links here and i will and them to the playlist",name || 'there');
         bot.send(reply);
     } else {
         // delete their data
