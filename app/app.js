@@ -2,7 +2,8 @@
 
 const express = require('express');
 const builder = require('botbuilder');
-
+const validator = require('youtube-url');
+const PlaylistQueue = require('./util/playlist');
 const server = express();
 server.listen(process.env.port || process.env.PORT || 3000, function () {
     console.log('%s listening to %s', server.name, server.url);
@@ -76,20 +77,19 @@ bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i
 bot.dialog('/', [
     function (session) {
         //validate
-        builder.Prompts.text(session, "Hello... What's your name?");
+        builder.Prompts.text(session, "Hello... Please Enter a youtube URL");
     },
     function (session, results) {
-        session.userData.name = results.response;
-        builder.Prompts.number(session, "Hi " + results.response + ", How many years have you been coding?"); 
-    },
-    function (session, results) {
-        session.userData.coding = results.response;
-        builder.Prompts.choice(session, "What language do you code Node using?", ["JavaScript", "CoffeeScript", "TypeScript"]);
-    },
-    function (session, results) {
-        session.userData.language = results.response.entity;
-        session.send("Got it... " + session.userData.name + 
-                     " you've been programming for " + session.userData.coding + 
-                     " years and use " + session.userData.language + ".");
+        let playlist = new PlaylistQueue();
+        session.userData.url = results.response;
+        if(validator.valid(session.userData.url)) {
+            let urlId = validator.extractId(session.userData.url);
+            if(playlist.add(urlId)) {
+                session.endDialog("Your youtube url was successfully added");
+            }            
+        } else {
+            session.endDialog("Please enter a valid youtube url");
+            
+        }       
     }
 ]);

@@ -23,17 +23,18 @@
   },
   "homepage": "https://github.com/99xt/youtube-queuing-bot#readme",
   "dependencies": {
-    "express": "^4.14.0",
-    "botbuilder": "^3.3.0",
     "async": "^2.1.2",
     "base64url": "^2.0.0",
+    "botbuilder": "^3.3.0",
     "busboy": "^0.2.13",
     "chrono-node": "^1.2.4",
+    "express": "^4.14.0",
     "jsonwebtoken": "^7.1.9",
     "node-uuid": "^1.4.7",
     "request": "^2.75.0",
     "restify": "^4.1.1",
     "rsa-pem-from-mod-exp": "^0.8.4",
-    "sprintf-js": "^1.0.3"
+    "sprintf-js": "^1.0.3",
+    "youtube-url": "^0.5.0"
   }
 }
