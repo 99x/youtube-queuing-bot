@@ -75,6 +75,7 @@ bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i
 
 bot.dialog('/', [
     function (session) {
+        //validate
         builder.Prompts.text(session, "Hello... What's your name?");
     },
     function (session, results) {
