@@ -5,7 +5,7 @@
   "main": "app/app.js",
   "scripts": {
     "start": "node ./app/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "webdriver-manager update && nyc --reporter=html --reporter=text protractor ./test/conf.js"
   },
   "repository": {
     "type": "git",
@@ -36,5 +36,11 @@
     "rsa-pem-from-mod-exp": "^0.8.4",
     "sprintf-js": "^1.0.3",
     "youtube-url": "^0.5.0"
+  },
+  "devDependencies": {
+    "istanbul": "0.4.5",
+    "mocha": "3.5.0",
+    "nyc": "11.1.0",
+    "protractor": "5.1.2"
   }
 }
