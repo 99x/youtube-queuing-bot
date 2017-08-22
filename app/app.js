@@ -5,8 +5,9 @@ const builder = require('botbuilder');
 const validator = require('youtube-url');
 const PlaylistQueue = require('./util/playlist');
 const server = express();
+const port = process.env.port || process.env.PORT || 3000;
 server.listen(process.env.port || process.env.PORT || 3000, function () {
-    console.log('%s listening to %s', server.name, server.url);
+    console.log('%s listening to %s', server.name, port);
 });
 
 // Create chat bot
