@@ -4,8 +4,11 @@
   "description": "This Skype bot will queue any youtube urls and form a playlist.",
   "main": "app/app.js",
   "scripts": {
+    "install": "node ./node_modules/protractor/bin/webdriver-manager update",  
+    "webdriver-update": "webdriver-manager update",    
     "start": "node ./app/app.js",
     "test": "webdriver-manager update && nyc --reporter=html --reporter=text protractor ./test/conf.js"
+    
   },
   "repository": {
     "type": "git",
