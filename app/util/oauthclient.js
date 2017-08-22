@@ -1,9 +1,5 @@
-
-//SampleClient googleapis-nodejs-client 
-
 'use strict';
-
-
+//SampleClient googleapis-nodejs-client
 
 var google = require('googleapis');
 var OAuth2Client = google.auth.OAuth2;
@@ -15,14 +11,14 @@ var secrets = require('../auth.json');
 
 var called = false;
 
-function callOnce (callback) {
+function callOnce(callback) {
   if (!called) {
     called = true;
     callback();
   }
 }
 
-function handler (request, response, server, callback) {
+function handler(request, response, server, callback) {
   var self = this;
   var qs = querystring.parse(url.parse(request.url).query);
   self.oAuth2Client.getToken(qs.code, function (err, tokens) {
@@ -37,29 +33,23 @@ function handler (request, response, server, callback) {
   });
 }
 
-function SampleClient (options) {
+function SampleClient(options) {
   var self = this;
   self.isAuthenticated = false;
-  this._options = options || { scopes: [] };
+  this._options = options || {scopes: []};
 
-  
   this.oAuth2Client = new OAuth2Client(
     secrets.web.client_id,
     secrets.web.client_secret,
     secrets.web.redirect_uris[0]
   );
 
- 
   this._authenticate = function (scopes, callback) {
-   
     self.authorizeUrl = self.oAuth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: scopes.join(' ')
     });
-  
-  
-  
-  
+
     var server = http.createServer(function (request, response) {
       callOnce(function () {
         handler.call(self, request, response, server, callback);

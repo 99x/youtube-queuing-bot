@@ -34,8 +34,8 @@ function onPlayerStateChange(event) {
     setTimeout(stopVideo, 6000);
     done = true;
   }
-  if(event.data ==YT.PlayerState.ENDED){
 
+  if(event.data ==YT.PlayerState.ENDED){
     player.loadVideoById(videoIds[count], 0, "large");
     player.playVideo();
     count++;

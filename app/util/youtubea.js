@@ -1,5 +1,3 @@
-
-
 'use strict';
 
 var google = require('googleapis');
@@ -12,7 +10,7 @@ var youtube = google.youtube({
   auth: sampleClient.oAuth2Client
 });
 
-function getCategory (id) {
+function getCategory(id) {
   youtube.search.list({
     part: 'id,snippet',
     id: id
@@ -23,7 +21,6 @@ function getCategory (id) {
     if (data) {
       console.log(util.inspect(data, false, null));
     }
-   
   });
 }
 
