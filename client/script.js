@@ -9,19 +9,18 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
+var playerElm = document.getElementById("player");
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
-    height: window.screen.availHeight,
-    width: window.screen.availWidth,
+    height: playerElm.offsetHeight,
+    width: playerElm.offsetWidth,
     videoId: videoIds[count],
     playerVars: { 'autoplay': 1, 'controls': 0},
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
     }
-
   });
-
 }
 
 function onPlayerReady(event) {
@@ -35,8 +34,8 @@ function onPlayerStateChange(event) {
     setTimeout(stopVideo, 6000);
     done = true;
   }
-  if(event.data ==YT.PlayerState.ENDED){
 
+  if(event.data ==YT.PlayerState.ENDED){
     player.loadVideoById(videoIds[count], 0, "large");
     player.playVideo();
     count++;
@@ -44,9 +43,9 @@ function onPlayerStateChange(event) {
     if(videoIds.length  == count){
       count =0;
     }
-
   }
 }
+
 function stopVideo() {
   player.stopVideo();
 }
